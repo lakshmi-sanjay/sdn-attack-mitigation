@@ -1,9 +1,10 @@
 # SDN Attack Detection and Mitigation
-
+'''
 TEAM MEMBERS
 Lakshmi Sanjay  PES1UG25CS279  TCP client-server programming and traffic generation
 Kevalya Jain    PES1UG25CS253  Traffic monitoring and intrusion detection
 Manas Agrawal   PES1UG25CS289  SDN controller and blocking
+'''
 
 A small Mininet and OpenFlow project that watches TCP connections to a server, flags any source that opens too many connections in a short window, and has the SDN controller drop that source's traffic for a while.
 
