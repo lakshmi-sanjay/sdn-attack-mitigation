@@ -1,0 +1,6 @@
+{
+  "run_id": "protected_normal_plus_attack_t1",
+  "condition": "protected",
+  "scenario": "normal_plus_attack",
+  "trial": 1
+}

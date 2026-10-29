@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SDN Security Dashboard</title>
+<style>
+:root {
+    color-scheme: dark;
+    font-family: system-ui, sans-serif;
+    background: #0b1120;
+    color: #e5e7eb;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px; }
+header {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
+}
+h1 { margin: 0; font-size: 1.7rem; }
+h2 { font-size: 1.05rem; margin: 0 0 16px; }
+.subtitle, .metric-label, .metric-note, th, .muted, .empty {
+    color: #94a3b8;
+}
+.subtitle { margin-top: 6px; }
+.status {
+    border: 1px solid #334155; border-radius: 999px;
+    padding: 8px 12px; font-size: .9rem;
+}
+.dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; background: #f59e0b; margin-right: 8px;
+}
+.grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px; margin-bottom: 20px;
+}
+.panel {
+    background: #111b2e; border: 1px solid #263449;
+    border-radius: 14px; padding: 18px; min-width: 0;
+}
+.metric-label { font-size: .9rem; }
+.metric-value { font-size: 1.8rem; font-weight: 700; margin-top: 12px; }
+.metric-note { font-size: .8rem; margin-top: 5px; }
+.content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 11px 8px; border-bottom: 1px solid #263449; }
+th { font-weight: 500; }
+.empty { padding: 18px 0; }
+@media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .content-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    body { padding: 14px; }
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+    <div>
+        <h1>SDN Security Dashboard</h1>
+        <div class="subtitle">Network monitoring and intrusion response</div>
+    </div>
+    <div class="status">
+        <span class="dot"></span><span id="api-status">Checking API...</span>
+    </div>
+</header>
+
+<section class="grid">
+    <article class="panel">
+        <div class="metric-label">Connections observed</div>
+        <div class="metric-value" id="connections">—</div>
+        <div class="metric-note">Recorded traffic events</div>
+    </article>
+    <article class="panel">
+        <div class="metric-label">Security alerts</div>
+        <div class="metric-value" id="alerts">—</div>
+        <div class="metric-note">Detected suspicious activity</div>
+    </article>
+    <article class="panel">
+        <div class="metric-label">Blocked IPs</div>
+        <div class="metric-value" id="blocked">Not connected</div>
+        <div class="metric-note">Awaiting confirmed switch status</div>
+    </article>
+    <article class="panel">
+        <div class="metric-label">Last updated</div>
+        <div class="metric-value" id="updated" style="font-size:1.2rem">—</div>
+        <div class="metric-note">Browser refresh time</div>
+    </article>
+</section>
+
+<section class="content-grid">
+    <article class="panel">
+        <h2>Recent traffic events</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Time</th><th>Source IP</th><th>Destination port</th></tr></thead>
+                <tbody id="traffic-table">
+                    <tr><td colspan="3" class="empty">Loading events...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+    <article class="panel">
+        <h2>System status</h2>
+        <p>Flask API: <strong id="api-detail">Checking...</strong></p>
+        <p>Controller: <strong id="controller-detail">Not connected</strong></p>
+        <p>Mininet switch: <strong id="switch-detail">Not connected</strong></p>
+        <p class="muted">Controller and switch status require separate verification.</p>
+    </article>
+</section>
+
+<script>
+async function refreshDashboard() {
+    const status = document.getElementById("api-status");
+    const detail = document.getElementById("api-detail");
+    const dot = document.querySelector(".dot");
+
+    try {
+        const [healthResponse, metricsResponse, trafficResponse, switchResponse] =
+            await Promise.all([
+                fetch("/health", {cache: "no-store"}),
+                fetch("/api/metrics", {cache: "no-store"}),
+                fetch("/api/traffic", {cache: "no-store"}),
+                fetch("/api/status", {cache: "no-store"})
+            ]);
+
+        if (!healthResponse.ok || !metricsResponse.ok || !trafficResponse.ok) {
+            throw new Error("Dashboard API request failed");
+        }
+
+        const metrics = await metricsResponse.json();
+        const trafficData = await trafficResponse.json();
+
+        status.textContent = "API online";
+        detail.textContent = "Online";
+        dot.style.background = "#22c55e";
+
+        document.getElementById("connections").textContent =
+            metrics.connections ?? 0;
+        document.getElementById("alerts").textContent =
+            metrics.alerts ?? 0;
+        document.getElementById("updated").textContent =
+            new Date().toLocaleTimeString();
+
+        // Display live switch status and actual active drop rules.
+        const controllerDetail =
+            document.getElementById("controller-detail");
+        const switchDetail =
+            document.getElementById("switch-detail");
+        const blockedMetric =
+            document.getElementById("blocked");
+
+        if (switchResponse.ok) {
+            const switchData = await switchResponse.json();
+
+            switchDetail.textContent =
+                switchData.switch === "online" ? "Online" : "Query failed";
+
+            blockedMetric.textContent = switchData.blocked_count ?? 0;
+
+            controllerDetail.textContent =
+                switchData.controller === "unknown"
+                    ? "Status not verified"
+                    : switchData.controller;
+
+            let blockedList = document.getElementById("blocked-ip-list");
+
+            if (!blockedList) {
+                blockedList = document.createElement("p");
+                blockedList.id = "blocked-ip-list";
+                switchDetail.parentElement.after(blockedList);
+            }
+
+            const ips = switchData.blocked_ips || [];
+            blockedList.textContent = ips.length
+                ? "Currently blocked IPs: " + ips.join(", ")
+                : "Currently blocked IPs: None";
+        } else {
+            switchDetail.textContent = "Query failed";
+            blockedMetric.textContent = "Unavailable";
+            controllerDetail.textContent = "Status not verified";
+        }
+
+        // The API returns {traffic: [...]} with epoch_time and time.
+        const table = document.getElementById("traffic-table");
+        table.replaceChildren();
+
+        const events = (trafficData.traffic || [])
+            .filter(event => Number(event.epoch_time) > 1000000000);
+
+        if (events.length === 0) {
+            const row = table.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 3;
+            cell.className = "empty";
+            cell.textContent = "No recent traffic events recorded.";
+        } else {
+            for (const event of events) {
+                const row = table.insertRow();
+                row.insertCell().textContent = event.time || "Unknown";
+                row.insertCell().textContent =
+                    event.source_ip || "Unknown";
+                row.insertCell().textContent = "5000";
+            }
+        }
+    } catch (error) {
+        status.textContent = "API offline";
+        detail.textContent = "Connection error";
+        dot.style.background = "#ef4444";
+        console.error("Dashboard refresh failed:", error);
+    }
+}
+
+refreshDashboard();
+setInterval(refreshDashboard, 3000);
+</script>
+</body>
+</html>
