@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1085" viewBox="0 0 1500 1085" font-family="Helvetica, Arial, DejaVu Sans, sans-serif">
+<defs>
+<marker id="aGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#15803d"/></marker>
+<marker id="aBlack" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#111827"/></marker>
+<marker id="aBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" fill="#1d4ed8"/></marker>
+<marker id="aGray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#6b7280"/></marker>
+</defs>
+<rect x="0" y="0" width="1500" height="1085" rx="0" fill="#ffffff" stroke="#ffffff" stroke-width="0"/>
+<rect x="30" y="20" width="400" height="330" rx="16" fill="#e8f5e9" stroke="#86c98f" stroke-width="2.5"/>
+<text xml:space="preserve" x="230.0" y="52" font-size="21" font-weight="bold" fill="#14532d" text-anchor="middle">Traffic Monitor</text>
+<text xml:space="preserve" x="230.0" y="75" font-size="15" font-weight="normal" fill="#14532d" text-anchor="middle">(Person 3)</text>
+<rect x="46" y="90" width="368" height="244" rx="10" fill="#d3ecd5" stroke="#6bb377" stroke-width="1.8"/>
+<text xml:space="preserve" x="230.0" y="116" font-size="16.5" font-weight="bold" fill="#111827" text-anchor="middle">monitor_events.py + detector.py</text>
+<text xml:space="preserve" x="62" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="76" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Reads connection events from the server</text>
+<text xml:space="preserve" x="62" y="165" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="76" y="165" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Counts connections per source IP in a</text>
+<text xml:space="preserve" x="76" y="186" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">sliding window (default 5 in 5 s)</text>
+<text xml:space="preserve" x="62" y="207" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="76" y="207" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Writes connection and alert rows to</text>
+<text xml:space="preserve" x="76" y="228" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">detection_log.csv</text>
+<text xml:space="preserve" x="62" y="249" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="76" y="249" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Protected run: requests one block per</text>
+<text xml:space="preserve" x="76" y="270" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">source and logs block_requested</text>
+<text xml:space="preserve" x="62" y="291" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="76" y="291" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Baseline run: detects and logs only</text>
+<rect x="580" y="20" width="340" height="330" rx="16" fill="#f3e8fa" stroke="#c08bdc" stroke-width="2.5"/>
+<text xml:space="preserve" x="750.0" y="52" font-size="21" font-weight="bold" fill="#581c87" text-anchor="middle">Block API (Flask)</text>
+<text xml:space="preserve" x="750.0" y="75" font-size="15" font-weight="normal" fill="#581c87" text-anchor="middle">(port 5000)</text>
+<rect x="596" y="90" width="308" height="244" rx="10" fill="#e4c9f0" stroke="#b070d0" stroke-width="1.8"/>
+<text xml:space="preserve" x="750.0" y="116" font-size="16.5" font-weight="bold" fill="#111827" text-anchor="middle">block_api.py</text>
+<text xml:space="preserve" x="612" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="626" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">POST /block and /unblock check the</text>
+<text xml:space="preserve" x="626" y="165" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">IPv4 address and queue the request</text>
+<text xml:space="preserve" x="612" y="186" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="626" y="186" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Queue is block_requests.json,</text>
+<text xml:space="preserve" x="626" y="207" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">protected by a file lock</text>
+<text xml:space="preserve" x="612" y="228" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="626" y="228" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Dashboard at / with /api/metrics,</text>
+<text xml:space="preserve" x="626" y="249" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">/api/traffic and /api/status</text>
+<text xml:space="preserve" x="612" y="270" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="626" y="270" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Status panel reads the switch with</text>
+<text xml:space="preserve" x="626" y="291" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">ovs-ofctl and ovs-vsctl</text>
+<rect x="1070" y="20" width="400" height="330" rx="16" fill="#e3f2fd" stroke="#7bb7ec" stroke-width="2.5"/>
+<text xml:space="preserve" x="1270.0" y="52" font-size="21" font-weight="bold" fill="#0c3b6e" text-anchor="middle">SDN Controller (OS-Ken)</text>
+<text xml:space="preserve" x="1270.0" y="75" font-size="15" font-weight="normal" fill="#0c3b6e" text-anchor="middle">(Person 2)</text>
+<rect x="1086" y="90" width="368" height="244" rx="10" fill="#c4e0f8" stroke="#5ea3e0" stroke-width="1.8"/>
+<text xml:space="preserve" x="1270.0" y="116" font-size="16.5" font-weight="bold" fill="#111827" text-anchor="middle">controller.py</text>
+<text xml:space="preserve" x="1102" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1116" y="144" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Polls block_requests.json every second</text>
+<text xml:space="preserve" x="1102" y="165" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1116" y="165" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Installs a priority-100 DROP rule for the</text>
+<text xml:space="preserve" x="1116" y="186" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">source IP with a 30 s hard timeout</text>
+<text xml:space="preserve" x="1102" y="207" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1116" y="207" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Confirms the rule with a flow-stats reply,</text>
+<text xml:space="preserve" x="1116" y="228" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">then logs drop_installed</text>
+<text xml:space="preserve" x="1102" y="249" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1116" y="249" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Logs block_removed when the rule expires</text>
+<text xml:space="preserve" x="1102" y="270" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1116" y="270" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Learning switch forwards all other</text>
+<text xml:space="preserve" x="1116" y="291" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">traffic (OpenFlow 1.3)</text>
+<line x1="430" y1="150" x2="578" y2="150" stroke="#111827" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#aBlack)"/>
+<text xml:space="preserve" x="504" y="112" font-size="13" font-weight="bold" fill="#111827" text-anchor="middle">HTTP POST</text>
+<text xml:space="preserve" x="504" y="128" font-size="13" font-weight="bold" fill="#111827" text-anchor="middle">/block</text>
+<text xml:space="preserve" x="504" y="176" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="middle">protected</text>
+<text xml:space="preserve" x="504" y="192" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="middle">runs only</text>
+<line x1="920" y1="150" x2="1068" y2="150" stroke="#15803d" stroke-width="3" marker-end="url(#aGreen)"/>
+<text xml:space="preserve" x="994" y="104" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">block_requests</text>
+<text xml:space="preserve" x="994" y="120" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">.json</text>
+<text xml:space="preserve" x="994" y="176" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="middle">polled every</text>
+<text xml:space="preserve" x="994" y="192" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="middle">1 second</text>
+<rect x="30" y="385" width="1440" height="440" rx="16" fill="#eaf1f8" stroke="#9db4cc" stroke-width="2"/>
+<text xml:space="preserve" x="150" y="418" font-size="21" font-weight="bold" fill="#1e3a5f" text-anchor="start">Mininet Network (Data Plane)</text>
+<line x1="1270" y1="350" x2="1270" y2="478" stroke="#1d4ed8" stroke-width="3.5"/>
+<line x1="1270" y1="478" x2="868" y2="478" stroke="#1d4ed8" stroke-width="3.5" marker-end="url(#aBlue)"/>
+<text xml:space="preserve" x="1090" y="462" font-size="14" font-weight="bold" fill="#1d4ed8" text-anchor="middle">OpenFlow 1.3 to 127.0.0.1:6653</text>
+<text xml:space="preserve" x="1090" y="504" font-size="12.5" font-weight="normal" fill="#1d4ed8" text-anchor="middle">flow-mods, flow-stats, flow-removed</text>
+<line x1="750" y1="350" x2="750" y2="432" stroke="#6b7280" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#aGray)"/>
+<text xml:space="preserve" x="766" y="374" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="start">ovs-ofctl dump-flows s1 (status panel)</text>
+<g>
+<rect x="632" y="438" width="236" height="88" rx="14" fill="#bcd9f2" stroke="#4a8fd0" stroke-width="2.5"/>
+<text xml:space="preserve" x="750" y="474" font-size="26" font-weight="bold" fill="#0c3b6e" text-anchor="middle">s1</text>
+<text xml:space="preserve" x="750" y="502" font-size="14.5" font-weight="normal" fill="#0c3b6e" text-anchor="middle">Open vSwitch, OpenFlow 1.3</text>
+</g>
+<line x1="260" y1="570" x2="260" y2="600" stroke="#111827" stroke-width="2.2"/>
+<line x1="750" y1="526" x2="750" y2="600" stroke="#111827" stroke-width="2.2"/>
+<line x1="1240" y1="570" x2="1240" y2="600" stroke="#111827" stroke-width="2.2"/>
+<polyline points="660,526 660,560 260,560 260,600" fill="none" stroke="#111827" stroke-width="2.2"/>
+<polyline points="840,526 840,560 1240,560 1240,600" fill="none" stroke="#111827" stroke-width="2.2"/>
+<line x1="750" y1="526" x2="750" y2="600" stroke="#111827" stroke-width="2.2"/>
+<rect x="45" y="600" width="430" height="205" rx="12" fill="#e6f4e6" stroke="#7dc27d" stroke-width="2.2"/>
+<text xml:space="preserve" x="260" y="632" font-size="20" font-weight="bold" fill="#111827" text-anchor="middle">h3  (10.0.0.3)</text>
+<text xml:space="preserve" x="260" y="656" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">Monitored TCP server</text>
+<text xml:space="preserve" x="67" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="81" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">server_monitored.py --port 5001</text>
+<text xml:space="preserve" x="67" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="81" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">Accepts TCP connections</text>
+<text xml:space="preserve" x="67" y="730" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="81" y="730" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">Writes one event per accepted connection to</text>
+<text xml:space="preserve" x="81" y="751" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">connection_events.json</text>
+<rect x="535" y="600" width="430" height="205" rx="12" fill="#fde8e8" stroke="#ee8f8f" stroke-width="2.2"/>
+<text xml:space="preserve" x="750" y="632" font-size="20" font-weight="bold" fill="#111827" text-anchor="middle">h1  (10.0.0.1)</text>
+<text xml:space="preserve" x="750" y="656" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">Legitimate client  (Person 1)</text>
+<text xml:space="preserve" x="557" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="571" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">traffic_gen.py --mode normal --rate 0.5</text>
+<text xml:space="preserve" x="557" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="571" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">One connection every 2 s, stays under</text>
+<text xml:space="preserve" x="571" y="730" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">the detection threshold</text>
+<text xml:space="preserve" x="557" y="751" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="571" y="751" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">Target 10.0.0.3:5001</text>
+<rect x="1025" y="600" width="430" height="205" rx="12" fill="#fff3d1" stroke="#e8b93c" stroke-width="2.2"/>
+<text xml:space="preserve" x="1240" y="632" font-size="20" font-weight="bold" fill="#111827" text-anchor="middle">h2  (10.0.0.2)</text>
+<text xml:space="preserve" x="1240" y="656" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">Attack client  (Person 1)</text>
+<text xml:space="preserve" x="1047" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1061" y="688" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">traffic_gen.py --mode flood --rate 50</text>
+<text xml:space="preserve" x="1047" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1061" y="709" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">Many connections in a short time,</text>
+<text xml:space="preserve" x="1061" y="730" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">trips the detection threshold</text>
+<text xml:space="preserve" x="1047" y="751" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="1061" y="751" font-size="14" font-weight="normal" fill="#1f2937" text-anchor="start">Target 10.0.0.3:5001</text>
+<line x1="100" y1="600" x2="100" y2="352" stroke="#15803d" stroke-width="3" marker-end="url(#aGreen)"/>
+<text xml:space="preserve" x="116" y="470" font-size="13" font-weight="bold" fill="#15803d" text-anchor="start">connection_events.json</text>
+<text xml:space="preserve" x="116" y="487" font-size="12.5" font-weight="normal" fill="#374151" text-anchor="start">written by h3, read by the monitor</text>
+<rect x="30" y="850" width="470" height="215" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+<text xml:space="preserve" x="50" y="882" font-size="18" font-weight="bold" fill="#111827" text-anchor="start">Key Addresses and Ports</text>
+<text xml:space="preserve" x="50" y="912" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="912" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Controller (OS-Ken): 127.0.0.1:6653</text>
+<text xml:space="preserve" x="50" y="936" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="936" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Block API (Flask): 127.0.0.1:5000</text>
+<text xml:space="preserve" x="50" y="960" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="960" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Monitored server: 10.0.0.3:5001</text>
+<text xml:space="preserve" x="50" y="984" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="984" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">h1 10.0.0.1, h2 10.0.0.2, h3 10.0.0.3</text>
+<text xml:space="preserve" x="50" y="1008" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="1008" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">DROP rule timeout: 30 s</text>
+<text xml:space="preserve" x="50" y="1032" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">•</text>
+<text xml:space="preserve" x="64" y="1032" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Detection: 5 connections in 5 s</text>
+<rect x="520" y="850" width="500" height="215" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+<text xml:space="preserve" x="540" y="882" font-size="18" font-weight="bold" fill="#111827" text-anchor="start">Mininet Startup Command</text>
+<rect x="540" y="896" width="460" height="78" rx="8" fill="#e0efff" stroke="#9cc3ec" stroke-width="1.5"/>
+<text xml:space="preserve" x="554" y="922" font-size="13.5" font-weight="normal" fill="#1e3a8a" text-anchor="start" font-family="DejaVu Sans Mono, Menlo, Courier New, monospace">sudo mn --topo single,3 \</text>
+<text xml:space="preserve" x="554" y="944" font-size="13.5" font-weight="normal" fill="#1e3a8a" text-anchor="start" font-family="DejaVu Sans Mono, Menlo, Courier New, monospace">    --switch ovsk,protocols=OpenFlow13 \</text>
+<text xml:space="preserve" x="554" y="966" font-size="13.5" font-weight="normal" fill="#1e3a8a" text-anchor="start" font-family="DejaVu Sans Mono, Menlo, Courier New, monospace">    --controller remote,ip=127.0.0.1,port=6653</text>
+<text xml:space="preserve" x="540" y="1002" font-size="14" font-weight="normal" fill="#374151" text-anchor="start">Built-in single,3 topology: one switch s1, three hosts</text>
+<text xml:space="preserve" x="540" y="1022" font-size="14" font-weight="normal" fill="#374151" text-anchor="start">Controller is remote, OpenFlow 1.3</text>
+<rect x="1040" y="850" width="430" height="215" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+<text xml:space="preserve" x="1060" y="882" font-size="18" font-weight="bold" fill="#111827" text-anchor="start">Arrow Legend</text>
+<line x1="1060" y1="906" x2="1130" y2="906" stroke="#111827" stroke-width="2.2"/>
+<text xml:space="preserve" x="1146" y="911" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Network link (TCP traffic)</text>
+<line x1="1060" y1="934" x2="1130" y2="934" stroke="#111827" stroke-width="2.2" stroke-dasharray="8 6"/>
+<text xml:space="preserve" x="1146" y="939" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">HTTP request</text>
+<line x1="1060" y1="962" x2="1130" y2="962" stroke="#15803d" stroke-width="3"/>
+<text xml:space="preserve" x="1146" y="967" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Shared JSON file in runtime/</text>
+<line x1="1060" y1="990" x2="1130" y2="990" stroke="#1d4ed8" stroke-width="3.5"/>
+<text xml:space="preserve" x="1146" y="995" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">OpenFlow 1.3 control channel</text>
+<line x1="1060" y1="1018" x2="1130" y2="1018" stroke="#6b7280" stroke-width="2" stroke-dasharray="3 5"/>
+<text xml:space="preserve" x="1146" y="1023" font-size="14.5" font-weight="normal" fill="#1f2937" text-anchor="start">Command-line query (ovs-ofctl)</text>
+</svg>

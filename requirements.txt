@@ -2,3 +2,4 @@ flask
 filelock
 requests
 os-ken
+matplotlib

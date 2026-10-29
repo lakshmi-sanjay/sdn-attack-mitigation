@@ -4,6 +4,8 @@ A small Mininet and OpenFlow project that watches TCP connections to a server, f
 
 We built it as a group project for our Computer Networks course. Everything runs on one machine: Mininet for the network, an OS-Ken (Ryu fork) controller for the switch, and a few plain Python scripts for the server, the detector and the block API.
 
+![System architecture](docs/architecture.png)
+
 ## How it works
 
 ```
@@ -62,12 +64,18 @@ traffic/
     client.py             TCP client with retries and timeouts
     traffic_gen.py        normal, flood and slow traffic generator
     test_all.py           test suite for the server, client and generator
+analysis/
+    analyze_results.py    turns the raw trial logs into summary tables and figures
+tests/
+    test_monitor.py       unit tests for the detector
 config/
     detection_config.json threshold and window
     experiment_context.example.json
+docs/
+    architecture.png      system diagram (editable source: architecture.svg)
 scripts/
     init_runtime.sh       creates runtime/ and the files the components share
-results/                  logs collected from our experiment runs
+results/                  raw logs, summary tables and figures from our experiment runs
 ```
 
 `runtime/` is created on first use and is not tracked by git.
@@ -212,11 +220,41 @@ python3 traffic/test_all.py
 
 It covers the command set, fragmented and pipelined messages, invalid input, abrupt disconnects, idle timeouts, the client limit, concurrent clients, and what the client and generator do when the server is down.
 
-The detector can be exercised on its own. `python3 sdn_defense/detector.py` sends three simulated connections and writes to `runtime/detection_log.csv`.
+The detector has its own unit tests. They replay traffic with fixed timestamps, so they finish in about a second and never touch the real log.
+
+```
+python3 tests/test_monitor.py
+```
+
+They check the threshold and window behaviour, per-source tracking, alert de-duplication, config loading and fallbacks, log format, and the command-line argument checks.
+
+`python3 sdn_defense/detector.py` sends three simulated connections and writes to `runtime/detection_log.csv`, which is handy for a quick manual check.
 
 ## Results
 
-`results/` holds the logs from our trials. File names follow `detection_log_<condition>_<scenario>_t<trial>.csv`. See `results/README.md` for the column layout and a note on timestamps.
+We ran 16 trials: baseline and protected conditions, normal-only and normal-plus-attack scenarios, four trials each. `analysis/analyze_results.py` rebuilds the tables and figures from the raw logs in `results/`.
+
+```
+python3 analysis/analyze_results.py
+```
+
+Summary for the four protected normal-plus-attack runs:
+
+| Metric | Median | Range |
+|--------|--------|-------|
+| Detection time (first connection in window to alert) | 0.76 ms | 0.50 to 1.13 ms |
+| Alert to block request | 5.6 ms | 4.5 to 6.5 ms |
+| Block request to DROP installed | 0.36 s | 0.16 to 0.65 s |
+| First attack connection to DROP installed | 0.36 s | 0.16 to 0.66 s |
+| DROP installed to removed | 30.1 s | 30.09 to 30.21 s |
+
+Across all 16 runs the legitimate host was never flagged, no block was requested in the normal-only runs, and no block was requested in the baseline attack runs. All four protected attack runs produced a block.
+
+![Detection time per attack run](results/fig_detection_time.png)
+
+![Time from first attack connection to DROP rule](results/fig_blocking_time.png)
+
+The full per-run numbers are in `results/results_per_run.csv` and `results/results_summary.csv`. File formats are described in `results/README.md`.
 
 ## Common issues
 

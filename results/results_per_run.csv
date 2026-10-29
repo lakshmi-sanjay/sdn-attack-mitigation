@@ -1,0 +1,17 @@
+run_id,condition,scenario,trial,legit_connections,attacker_connections,alert_raised,legit_host_flagged,attacker_burst_span_ms,detection_ms,block_requested,alert_to_request_ms,request_to_drop_s,first_attack_conn_to_drop_s,drop_to_removed_s,note
+baseline_normal_only_t1,baseline,normal_only,1,4,0,False,False,,,False,,,,,log shared with pre-experiment test rows; attacker rows excluded
+protected_normal_only_t1,protected,normal_only,1,3,0,False,False,,,False,,,,,
+baseline_normal_plus_attack_t1,baseline,normal_plus_attack,1,1,7,True,False,202.5,202.055,False,,,,,
+protected_normal_plus_attack_t1,protected,normal_plus_attack,1,1,7,True,False,8.62,0.812,True,6.51,0.651,0.659,30.21,
+baseline_normal_only_t2,baseline,normal_only,2,3,0,False,False,,,False,,,,,
+protected_normal_only_t2,protected,normal_only,2,3,0,False,False,,,False,,,,,
+baseline_normal_plus_attack_t2,baseline,normal_plus_attack,2,1,7,True,False,1.79,1.521,False,,,,,
+protected_normal_plus_attack_t2,protected,normal_plus_attack,2,1,7,True,False,6.06,1.133,True,4.46,0.271,0.277,30.13,
+baseline_normal_only_t3,baseline,normal_only,3,3,0,False,False,,,False,,,,,
+protected_normal_only_t3,protected,normal_only,3,3,0,False,False,,,False,,,,,
+baseline_normal_plus_attack_t3,baseline,normal_plus_attack,3,1,7,True,False,227.52,226.969,False,,,,,
+protected_normal_plus_attack_t3,protected,normal_plus_attack,3,1,7,True,False,209.49,0.501,True,5.19,0.157,0.163,30.16,
+baseline_normal_only_t4,baseline,normal_only,4,3,0,False,False,,,False,,,,,
+protected_normal_only_t4,protected,normal_only,4,3,0,False,False,,,False,,,,,
+baseline_normal_plus_attack_t4,baseline,normal_plus_attack,4,1,7,True,False,1.11,0.946,False,,,,,
+protected_normal_plus_attack_t4,protected,normal_plus_attack,4,1,7,True,False,7.27,0.713,True,6.0,0.443,0.45,30.09,

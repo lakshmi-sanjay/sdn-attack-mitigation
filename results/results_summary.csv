@@ -1,0 +1,13 @@
+metric,group,n,median,min,max,unit
+detection time,"baseline, normal+attack",4,101.788,0.946,226.969,ms
+detection time,"protected, normal+attack",4,0.762,0.501,1.133,ms
+detection time,all attack runs,8,1.039,0.501,226.969,ms
+attacker burst span (all 7 connections),all attack runs,8,7.945,1.11,227.52,ms
+alert to block request,"protected, normal+attack",4,5.595,4.46,6.51,ms
+block request to DROP installed,"protected, normal+attack",4,0.357,0.157,0.651,s
+first attack connection to DROP installed,"protected, normal+attack",4,0.364,0.163,0.659,s
+DROP installed to removed,"protected, normal+attack",4,30.145,30.09,30.21,s
+runs where legitimate host was flagged,all 16 runs,16,0,,,runs
+block requested in normal-only runs (false blocks),8 normal-only runs,8,0,,,runs
+block requested in baseline attack runs,"baseline, normal+attack",4,0,,,runs
+block requested in protected attack runs,"protected, normal+attack",4,4,,,runs
